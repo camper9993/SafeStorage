@@ -68,7 +68,6 @@ internal class HomeAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     } catch (e: ActivityNotFoundException) {
                         print(e.stackTrace)
                     }
-                    File(album.path.substring(0, album.path.length - 4)).delete()
                 }
             }
 
