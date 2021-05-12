@@ -1,10 +1,9 @@
 package ru.danilov.safestorage.utils
 
+import android.os.Environment
 import java.security.SecureRandom
 
 object Constants {
-    private const val ITERATION_MULTIPLIER = 10
-    private const val KEY_LENGTH = 256
-    private const val SALT_LENGTH = KEY_LENGTH / 8
-    private val RANDOM = SecureRandom()
+    val ROOT = Environment.getExternalStorageDirectory().absolutePath
+    lateinit var PRIVATE_KEY : String
 }

@@ -10,7 +10,7 @@ import ru.danilov.safestorage.models.PlainFile
 import ru.danilov.safestorage.databinding.FileCardBinding
 import java.util.ArrayList
 
-internal class FileBrowserAdapter(val viewModel: FileBrowserViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class FileBrowserAdapter(val onFileBrowserListener: OnFileBrowserListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     private val plainFiles: MutableList<PlainFile> = ArrayList()
@@ -47,15 +47,7 @@ internal class FileBrowserAdapter(val viewModel: FileBrowserViewModel) : Recycle
             fileCardBinding.fileViewModel = fileViewModel
 
             itemView.setOnClickListener {
-                if (!plainFile.isDir) {
-                    viewModel.addFile(
-                        plainFile.path,
-                        it.context.applicationInfo.dataDir + "/root/" + plainFile.name + ".enc"
-                    )
-                }
-                else {
-                    viewModel.getFiles(plainFile.path)
-                }
+               onFileBrowserListener.onClick(plainFile)
             }
 
         }

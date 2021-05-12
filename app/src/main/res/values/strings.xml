@@ -3,4 +3,6 @@
 
     <string name="choose_password">Choose Password</string>
     <string name="repeat_password">Repeat Password</string>
+    <string name="repeat_passphrase">Repeat passphrase</string>
+    <string name="passphrase">Passphrase</string>
 </resources>

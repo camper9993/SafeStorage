@@ -1,14 +1,15 @@
 package ru.danilov.safestorage.ui
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Pair
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import ru.danilov.safestorage.R
-import ru.danilov.safestorage.data.cryptography.Cryptography
+import java.math.BigInteger
+import java.security.SecureRandom
 
 @AndroidEntryPoint
 class SafeStorageActivity : AppCompatActivity() {
@@ -23,6 +24,9 @@ class SafeStorageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.root_layout)
         sharedPreferences = this.getSharedPreferences("app", MODE_PRIVATE)
+        if (sharedPreferences.getString("salt", null) == null) {
+            storeSalt()
+        }
         if (ContextCompat.checkSelfPermission(
                 applicationContext,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -36,12 +40,23 @@ class SafeStorageActivity : AppCompatActivity() {
     }
 
 
-    private fun storePassphrase(passphrase: String) {
-        val newHash: Pair<String, String> = Cryptography.hash("1234", null)
+    private fun storeSalt() {
+        val salt = ByteArray(16)
+        SecureRandom().nextBytes(salt)
         this.sharedPreferences
             .edit()
-            .putString("passphrase", newHash.first)
-            .putString("salt", newHash.second)
+            .putString("salt", toHex(salt))
             .apply()
+    }
+
+    private fun toHex(values: ByteArray): String? {
+        return String.format("%0" + values.size * 2 + "X", BigInteger(1, values))
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, imageData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, imageData)
+        for (fragment in supportFragmentManager.primaryNavigationFragment!!.childFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, imageData)
+        }
     }
 }

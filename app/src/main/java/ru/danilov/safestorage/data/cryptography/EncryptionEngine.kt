@@ -1,6 +1,7 @@
 package ru.danilov.safestorage.data.cryptography;
 
 import ru.danilov.safestorage.models.PlainFile
+import ru.danilov.safestorage.ui.SafeStorageActivity.Companion.key
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -8,7 +9,7 @@ import javax.crypto.CipherOutputStream
 
 object EncryptionEngine {
 
-    fun encryptFile(plainFilePath: String, encryptedFilePath: String) : PlainFile{
+    fun encryptFile(plainFilePath: String, encryptedFilePath: String) : PlainFile {
         val encryptedFile = File(encryptedFilePath)
         val plainFile = File(plainFilePath)
         val buffer = ByteArray(1024 * 1024)
@@ -16,7 +17,7 @@ object EncryptionEngine {
             var inputStream : InputStream? = null
             var outputStream : OutputStream? = null
 
-            val cipherPair = Cryptography.newCipher("1234")
+            val cipherPair = Cryptography.newCipher(key)
             val cipher = cipherPair.first
             val header = cipherPair.second
             try {
@@ -46,15 +47,15 @@ object EncryptionEngine {
         )
     }
 
-    fun decryptFile(encryptedFile: File) : File {
-        val plainFile = createTempFile(encryptedFile.absolutePath.substring(0, encryptedFile.absolutePath.length - 4))
+    fun decryptFile(encryptedFile: File) : PlainFile {
+        val plainFile = File(encryptedFile.absolutePath.substring(0, encryptedFile.absolutePath.length - 4).replace("root".toRegex(), "temp"))
         val buffer = ByteArray(1024 * 1024)
         try {
             var inputStream: InputStream? = null
             var outputStream: OutputStream? = null
             try {
                 inputStream = encryptedFile.inputStream()
-                val cipher = Cryptography.getCipher("1234", inputStream)
+                val cipher = Cryptography.getCipher(key, inputStream)
                 outputStream = CipherOutputStream(plainFile.outputStream(), cipher)
                 var bytesRead = inputStream.read(buffer)
                 while (bytesRead != -1) {
@@ -69,7 +70,10 @@ object EncryptionEngine {
             plainFile.delete()
             throw RuntimeException(e)
         }
-        return plainFile
+        return PlainFile(plainFile.name, plainFile.length() / 1024, plainFile.absolutePath,
+            isDir = false,
+            isEncrypted = false
+        )
     }
 
 }

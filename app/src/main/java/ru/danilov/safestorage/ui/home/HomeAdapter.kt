@@ -1,10 +1,12 @@
 package ru.danilov.safestorage.ui.home
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -17,7 +19,7 @@ import ru.danilov.safestorage.models.PlainFile
 import java.io.File
 import java.util.*
 
-internal class HomeAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class HomeAdapter(val onHomeAdapterListener: OnHomeAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     private val plainFiles: MutableList<PlainFile> = ArrayList()
@@ -50,25 +52,13 @@ internal class HomeAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class HomeViewHolder(private val dataBinding: ViewDataBinding) : RecyclerView.ViewHolder(
         dataBinding.root
     ) {
-        fun onBind(album: PlainFile) {
+        fun onBind(plainFile: PlainFile) {
             val encryptedfileCardBinding = dataBinding as EncryptedfileCardBinding
-            val fileViewModel = HomeFileViewModel(album)
-            encryptedfileCardBinding.viewModel =  fileViewModel
+            val fileViewModel = HomeFileViewModel(plainFile)
+            encryptedfileCardBinding.viewModel = fileViewModel
 
             itemView.setOnClickListener {
-                if (!album.isDir) {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
-                    intent.data =
-                        album.getUri(it.context, EncryptionEngine.decryptFile(File(album.path)))
-
-                    try {
-                        startActivity(it.context, intent, null)
-                    } catch (e: ActivityNotFoundException) {
-                        print(e.stackTrace)
-                    }
-                }
+                onHomeAdapterListener.onClick(plainFile)
             }
 
         }

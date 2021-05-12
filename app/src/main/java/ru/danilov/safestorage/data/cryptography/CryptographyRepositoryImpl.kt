@@ -1,14 +1,14 @@
 package ru.danilov.safestorage.data.cryptography
 
+import io.reactivex.Single
 import ru.danilov.safestorage.domain.repository.CryptographyRepository
+import ru.danilov.safestorage.models.PlainFile
 import java.io.File
 
-class CryptographyRepositoryImpl() : CryptographyRepository{
+class CryptographyRepositoryImpl : CryptographyRepository{
 
-    override fun encryptFile(plainFile : File, path : String) {
-        EncryptionEngine.encryptFile(plainFile.toString(), path)
-    }
+    override fun encryptFile(plainFilePath: String, encryptedFilePath: String) : Single<PlainFile> = Single.just(EncryptionEngine.encryptFile(plainFilePath, encryptedFilePath))
 
-    override fun decryptFile(encryptedFile: File) = EncryptionEngine.decryptFile(encryptedFile)
+    override fun decryptFile(encryptedFile: File) : Single<PlainFile> = Single.just(EncryptionEngine.decryptFile(encryptedFile))
 
 }

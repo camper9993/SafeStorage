@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
     <paths xmlns:android="http://schemas.android.com/apk/res/android">
-        <files-path name="logs" path="../root/" />
+        <files-path name="root" path="../root/" />
+        <files-path name="temp" path="../temp/" />
         <!-- use ".." to get files from app's root data dir -->
     </paths>
 </paths>

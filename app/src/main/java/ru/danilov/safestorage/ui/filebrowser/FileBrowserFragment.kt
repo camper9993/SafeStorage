@@ -1,7 +1,6 @@
 package ru.danilov.safestorage.ui.filebrowser
 
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,20 +13,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.danilov.safestorage.R
 import ru.danilov.safestorage.models.PlainFile
 import ru.danilov.safestorage.databinding.FilebrowserFragmentBinding
+import ru.danilov.safestorage.utils.Constants.ROOT
 
 @AndroidEntryPoint
-class FileBrowserFragment : Fragment(){
+class FileBrowserFragment : Fragment(), OnFileBrowserListener{
 
-    private lateinit var ROOT : String
     private lateinit var binding : FilebrowserFragmentBinding
     private val viewModel: FileBrowserViewModel by viewModels()
     private lateinit var adapter : FileBrowserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ROOT = Environment.getExternalStorageDirectory().absolutePath
-        adapter = FileBrowserAdapter(viewModel)
-        viewModel.getFiles(ROOT)
+        adapter = FileBrowserAdapter(this)
+        viewModel.setFiles(ROOT)
     }
 
     override fun onCreateView(
@@ -50,5 +48,17 @@ class FileBrowserFragment : Fragment(){
     private fun initRecyclerView(files: List<PlainFile>) {
         Log.i("FilesFragment", files.toString())
         adapter.addData(files)
+    }
+
+    override fun onClick(plainFile: PlainFile) {
+        if (!plainFile.isDir) {
+            viewModel.encryptFile(
+                plainFile.path,
+                requireContext().applicationInfo.dataDir + "/root/" + plainFile.name + ".enc"
+            )
+        }
+        else {
+            viewModel.setFiles(plainFile.path)
+        }
     }
 }
