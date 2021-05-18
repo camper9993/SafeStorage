@@ -50,8 +50,8 @@ class LoginFragment : Fragment() {
             binding.passphraseRepeatEditText.visibility = View.VISIBLE
             binding.passphraseRepeatEditText.setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if (binding.passphraseEditText.text.toString() == binding.passphraseRepeatEditText.text.toString()) {
-                        key = Cryptography.hash(binding.passphraseRepeatEditText.text.toString(), sharedPreferences.getString("salt", null)).first
+                    if (binding.passphraseEditText.text.toString() == binding.passphraseRepeatEditText.text.toString() && binding.passphraseEditText.text.toString().isNotEmpty()) {
+                        key = binding.passphraseEditText.text.toString()
                         viewModel.createStartFiles()
                         this.navigate(R.id.action_loginFragment_to_homeFragment)
                     }
@@ -68,16 +68,23 @@ class LoginFragment : Fragment() {
             binding.passphraseEditText.setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     binding.passphraseRepeatEditText.visibility = View.INVISIBLE
-                    key = Cryptography.hash(binding.passphraseEditText.text.toString(), sharedPreferences.getString("salt", null)).first
-                    viewModel.setIsPasswordCorrect()
-                    viewModel.isPasswordCorrect.observe(viewLifecycleOwner, Observer {
-                        it?.let {
-                            if (it && findNavController().currentDestination!!.id == R.id.loginFragment)
-                                this.navigate(R.id.action_loginFragment_to_homeFragment)
-                            else
-                                Toast.makeText(requireContext(), "Wrong pass", Toast.LENGTH_LONG).show()
-                        }
-                    })
+                    if (binding.passphraseEditText.text.toString().isNotEmpty()) {
+                        key = binding.passphraseEditText.text.toString()
+                        viewModel.setIsPasswordCorrect()
+                        viewModel.isPasswordCorrect.observe(viewLifecycleOwner, Observer {
+                            it?.let {
+                                if (it && findNavController().currentDestination!!.id == R.id.loginFragment)
+                                    this.navigate(R.id.action_loginFragment_to_homeFragment)
+                                else
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Wrong pass",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                            }
+                        })
+                    }
+                    Toast.makeText(requireContext(), "Wrong pass", Toast.LENGTH_LONG).show()
 
                     true
                 } else {

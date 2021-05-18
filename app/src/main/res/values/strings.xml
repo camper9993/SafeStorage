@@ -5,4 +5,5 @@
     <string name="repeat_password">Repeat Password</string>
     <string name="repeat_passphrase">Repeat passphrase</string>
     <string name="passphrase">Passphrase</string>
+    <string name="camera">Camera</string>
 </resources>

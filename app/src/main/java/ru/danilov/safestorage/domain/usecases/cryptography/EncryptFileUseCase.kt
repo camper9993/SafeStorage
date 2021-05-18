@@ -1,12 +1,13 @@
 package ru.danilov.safestorage.domain.usecases.cryptography
 
 import io.reactivex.Single
+import ru.danilov.safestorage.domain.repository.CryptographyRepository
 import ru.danilov.safestorage.models.PlainFile
 import ru.danilov.safestorage.domain.repository.FileBrowserRepository
 import ru.danilov.safestorage.domain.usecases.base.SingleUseCase
 import javax.inject.Inject
 
-class EncryptFileUseCase @Inject constructor(private val fileBrowserRepository: FileBrowserRepository) : SingleUseCase<PlainFile>() {
+class EncryptFileUseCase @Inject constructor(private val cryptographyRepository: CryptographyRepository) : SingleUseCase<PlainFile>() {
 
     private var sourcePath: String? = null
 
@@ -22,6 +23,6 @@ class EncryptFileUseCase @Inject constructor(private val fileBrowserRepository: 
         this.destinationPath = destinationPath
     }
 
-    override fun buildUseCaseSingle(): Single<PlainFile> = fileBrowserRepository.addFile(sourcePath!!, destinationPath!!)
+    override fun buildUseCaseSingle(): Single<PlainFile> = cryptographyRepository.encryptFile(sourcePath!!, destinationPath!!)
 
 }

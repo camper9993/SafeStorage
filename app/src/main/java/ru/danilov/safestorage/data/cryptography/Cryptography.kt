@@ -19,24 +19,6 @@ object Cryptography {
     private const val SALT_LENGTH = KEY_LENGTH / 8
     private val RANDOM = SecureRandom()
 
-    fun hash(value: String, hexSalt: String?): Pair<String, String> {
-        return try {
-            var salt = ByteArray(16)
-            if (hexSalt == null) {
-                RANDOM.nextBytes(salt)
-            } else {
-                salt = toBytes(hexSalt)
-            }
-            val keySpecification: KeySpec =
-                PBEKeySpec(value.toCharArray(), salt, ITERATION_MULTIPLIER * 1000, KEY_LENGTH)
-            val keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
-            val hashBytes = keyFactory.generateSecret(keySpecification).encoded
-            Pair(toHex(hashBytes), toHex(salt))
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
-    }
-
     fun newCipher(passphrase: String): Pair<Cipher, ByteArray> {
         val header = ByteArrayOutputStream()
         val salt = ByteArray(SALT_LENGTH)

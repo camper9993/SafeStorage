@@ -1,22 +1,13 @@
 package ru.danilov.safestorage.ui.home
 
-import android.app.Activity
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import ru.danilov.safestorage.R
-import ru.danilov.safestorage.data.cryptography.Cryptography
-import ru.danilov.safestorage.data.cryptography.EncryptionEngine
 import ru.danilov.safestorage.databinding.EncryptedfileCardBinding
 import ru.danilov.safestorage.models.PlainFile
-import java.io.File
 import java.util.*
 
 internal class HomeAdapter(val onHomeAdapterListener: OnHomeAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -58,7 +49,7 @@ internal class HomeAdapter(val onHomeAdapterListener: OnHomeAdapterListener) : R
             encryptedfileCardBinding.viewModel = fileViewModel
 
             itemView.setOnClickListener {
-                onHomeAdapterListener.onClick(plainFile)
+                onHomeAdapterListener.onFileClick(plainFile)
             }
 
         }

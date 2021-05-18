@@ -1,0 +1,75 @@
+@startuml
+class Cryptography <<Singleton>> {
+    +newCipher(passphrase : String)
+    +getCipher(passphrase: String, inputStream: InputStream)
+}
+class CryptographyEngine <<Singleton>> {
+    +decrypt(encryptedFile: File)
+    +encrypt(plainFilePath: String, encryptedFilePath: String)
+}
+class CryptographyRepositoryImpl {
+    +encryptFile(plainFilePath: String, encryptedFilePath: String)
+    +decryptFile(encryptedFile: File)
+}
+class LoginRepositoryImpl {
+    +createStartFiles()
+    +checkPassword()
+}
+class FileBrowserRepositoryImpl {
+    +getFiles(path : String)
+}
+interface CryptographyRepository {
+    +encryptFile(plainFilePath: String, encryptedFilePath: String)
+    +decryptFile(encryptedFile: File)
+}
+
+interface FileBrowserRepository {
+    +getFiles(path : String)
+}
+
+interface LoginRepository {
+    +createStartFiles()
+    +checkPassword()
+}
+class DecryptFileUseCase {
++decrypt()
+}
+class EncryptFileUseCase {
++encrypt()
+}
+class GetFileUseCase{
++getFiles()
+}
+class CheckPasswordUseCase {
++checkPassword()
+}
+class CreateStartFilesUseCase{
++createStartFiles()
+}
+class FileBrowserFragment
+class HomeFragment
+class LoginFragment
+class HomeViewModel
+class LoginViewModel
+class FileBrowserViewModel
+CryptographyEngine --|> CryptographyRepositoryImpl
+Cryptography --|> CryptographyRepositoryImpl
+CryptographyRepositoryImpl  --|> CryptographyRepository
+FileBrowserRepositoryImpl --|> FileBrowserRepository
+LoginRepositoryImpl --|> LoginRepository
+LoginRepository --|> CheckPasswordUseCase
+LoginRepository --|> CreateStartFilesUseCase
+CryptographyRepository --|> EncryptFileUseCase
+CryptographyRepository --|> DecryptFileUseCase
+FileBrowserRepository --|> GetFileUseCase
+DecryptFileUseCase --|> HomeViewModel
+GetFileUseCase --|> HomeViewModel
+EncryptFileUseCase --|> FileBrowserViewModel
+GetFileUseCase --|> FileBrowserViewModel
+CheckPasswordUseCase --|> LoginViewModel
+CreateStartFilesUseCase --|> LoginViewModel
+FileBrowserViewModel --|> FileBrowserFragment
+HomeViewModel --|> HomeFragment
+LoginViewModel --|> LoginFragment
+
+@enduml

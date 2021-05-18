@@ -2,6 +2,8 @@
     xmlns:andorid="http://schemas.android.com/apk/distribution"
     package="ru.danilov.safestorage">
 
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
     <application
         android:name=".MainApplication"
         android:allowBackup="true"

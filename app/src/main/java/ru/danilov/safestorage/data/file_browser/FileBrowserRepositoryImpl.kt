@@ -22,8 +22,4 @@ class FileBrowserRepositoryImpl : FileBrowserRepository {
         }
         return Single.just(listFile)
     }
-
-    override fun addFile(filePath: String, destinationPath: String) = Single.just(EncryptionEngine.encryptFile(filePath, destinationPath))
-
-
 }
