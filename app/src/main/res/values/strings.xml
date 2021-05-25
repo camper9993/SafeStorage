@@ -6,4 +6,18 @@
     <string name="repeat_passphrase">Repeat passphrase</string>
     <string name="passphrase">Passphrase</string>
     <string name="camera">Camera</string>
+
+    <string name="final_delete">Вы действительно хотите удлаить файл?</string>
+    <string name="restore_confirmation">Восстановить файл?</string>
+    <string name="restore_ok">Да</string>
+    <string name="restore_no">Нет</string>
+    <string name="delete_confirmation">Удалить файл?</string>
+    <string name="delete_ok">Да</string>
+    <string name="delete_no">Нет</string>
+    <string name="add_file">Добавить файл</string>
+    <string name="take_photo">Сделать фото</string>
+    <string name="bucket">Корзина</string>
+    <string name="main_page">Главная</string>
+    <string name="scan">Сканировать документ</string>
+
 </resources>

@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/add_file"
-        android:title="Добавить файл" />
+        android:title="@string/add_file" />
     <item
         android:id="@+id/make_photo"
-        android:title="Сделать фото" />
+        android:title="@string/take_photo" />
+    <item
+        android:id="@+id/scan"
+        android:title="@string/scan" />
 </menu>

@@ -19,8 +19,10 @@ class LoginRepositoryImpl @Inject constructor(@ApplicationContext val applicatio
     override fun createStartFiles() {
         val rootDir = File("$applicationRoot/root")
         val tempDir = File("$applicationRoot/temp")
+        val binDir = File("$applicationRoot/bin")
         rootDir.mkdir()
         tempDir.mkdir()
+        binDir.mkdir()
         val testFile = File(applicationRoot, "check.txt")
         val writer = FileWriter(testFile)
         writer.append("Testing string for entrance.")

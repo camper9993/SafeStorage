@@ -29,5 +29,16 @@
         <action
             android:id="@+id/action_homeFragment_to_fileBrowserFragment"
             app:destination="@id/fileBrowserFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_binFragment"
+            app:destination="@id/binFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/binFragment"
+        android:name="ru.danilov.safestorage.ui.bin.BinFragment"
+        android:label="BinFragment" >
+        <action
+            android:id="@+id/action_binFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

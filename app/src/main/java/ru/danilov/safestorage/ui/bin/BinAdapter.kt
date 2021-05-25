@@ -1,4 +1,4 @@
-package ru.danilov.safestorage.ui.home
+package ru.danilov.safestorage.ui.bin
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,18 +6,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import ru.danilov.safestorage.R
+import ru.danilov.safestorage.databinding.BinfileCardBinding
 import ru.danilov.safestorage.databinding.EncryptedfileCardBinding
 import ru.danilov.safestorage.models.PlainFile
 import java.util.*
 
-internal class HomeAdapter(val onHomeAdapterListener: OnHomeAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class BinAdapter(val onBinAdapterListener: OnBinAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     private val plainFiles: MutableList<PlainFile> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val fileCardBinding = DataBindingUtil.inflate<ViewDataBinding>(
-            LayoutInflater.from(parent.context), R.layout.encryptedfile_card, parent, false
+            LayoutInflater.from(parent.context), R.layout.binfile_card, parent, false
         )
         return HomeViewHolder(fileCardBinding)
     }
@@ -44,16 +45,16 @@ internal class HomeAdapter(val onHomeAdapterListener: OnHomeAdapterListener) : R
         dataBinding.root
     ) {
         fun onBind(plainFile: PlainFile) {
-            val encryptedfileCardBinding = dataBinding as EncryptedfileCardBinding
-            val fileViewModel = HomeFileViewModel(plainFile)
-            encryptedfileCardBinding.viewModel = fileViewModel
+            val binfileCardBinding = dataBinding as BinfileCardBinding
+            val binFileViewModel = BinFileViewModel(plainFile)
+            binfileCardBinding.binFileViewModel = binFileViewModel
 
             itemView.setOnClickListener {
-                onHomeAdapterListener.onFileClick(plainFile)
+                onBinAdapterListener.onFileClick(plainFile)
             }
 
             itemView.setOnLongClickListener {
-                onHomeAdapterListener.onLongFileClick(plainFile)
+                onBinAdapterListener.onLongFileClick(plainFile)
                 false
             }
         }

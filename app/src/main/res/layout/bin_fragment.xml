@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import type="android.view.View"/>
 
-        <variable name="viewModel" type="ru.danilov.safestorage.ui.home.HomeViewModel"/>
+        <variable name="viewModel" type="ru.danilov.safestorage.ui.bin.BinViewModel"/>
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,22 +18,11 @@
             app:spanCount="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/home_recycler_view"
+            android:id="@+id/bin_recycler_view"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            app:cb_pressedRingWidth="8dip"
-            android:src="@drawable/ic_baseline_add_circle_24"
-            android:id="@+id/button"/>
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
+            android:id="@+id/bottom_navigation_bin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
@@ -44,7 +32,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/bottom_navigation_menu" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

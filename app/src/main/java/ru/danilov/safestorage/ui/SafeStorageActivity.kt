@@ -6,8 +6,15 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationMenu
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import ru.danilov.safestorage.R
+import ru.danilov.safestorage.ui.bin.BinFragment
+import ru.danilov.safestorage.ui.home.HomeFragment
+import ru.danilov.safestorage.utils.findNavController
+import ru.danilov.safestorage.utils.navigate
 import java.math.BigInteger
 import java.security.SecureRandom
 

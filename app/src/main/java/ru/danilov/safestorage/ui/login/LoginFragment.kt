@@ -36,6 +36,7 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
         sharedPreferences = requireContext().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE)
         applicationRoot = requireContext().applicationInfo.dataDir
+
     }
 
     override fun onCreateView(
