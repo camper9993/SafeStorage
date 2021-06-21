@@ -11,6 +11,14 @@ class CryptographyRepositoryImpl {
     +encryptFile(plainFilePath: String, encryptedFilePath: String)
     +decryptFile(encryptedFile: File)
 }
+class ZipRepositoryImpl {
+     +zip(files: File, zipFile: File)
+     +unzip(path: String, zipFile: ZipFile)
+}
+class ZipManger <<Singleton>> {
+    +zip(files: File, zipFile: File)
+    +unzip(path: String, zipFile: ZipFile)
+}
 class LoginRepositoryImpl {
     +createStartFiles()
     +checkPassword()
@@ -22,11 +30,13 @@ interface CryptographyRepository {
     +encryptFile(plainFilePath: String, encryptedFilePath: String)
     +decryptFile(encryptedFile: File)
 }
-
+interface ZipRepository {
+     +zip(files: File, zipFile: File)
+     +unzip(path: String, zipFile: ZipFile)
+}
 interface FileBrowserRepository {
     +getFiles(path : String)
 }
-
 interface LoginRepository {
     +createStartFiles()
     +checkPassword()
@@ -36,6 +46,12 @@ class DecryptFileUseCase {
 }
 class EncryptFileUseCase {
 +encrypt()
+}
+class ZipUseCase {
++zip()
+}
+class UnzipUseCase {
++unzip()
 }
 class GetFileUseCase{
 +getFiles()
@@ -52,11 +68,17 @@ class LoginFragment
 class HomeViewModel
 class LoginViewModel
 class FileBrowserViewModel
+class BinFragment
+class BinViewModel
+ZipManger --|> ZipRepositoryImpl
 CryptographyEngine --|> CryptographyRepositoryImpl
 Cryptography --|> CryptographyRepositoryImpl
 CryptographyRepositoryImpl  --|> CryptographyRepository
 FileBrowserRepositoryImpl --|> FileBrowserRepository
+ZipRepositoryImpl --|> ZipRepository
 LoginRepositoryImpl --|> LoginRepository
+ZipRepository --|> ZipUseCase
+ZipRepository --|> UnzipUsecase
 LoginRepository --|> CheckPasswordUseCase
 LoginRepository --|> CreateStartFilesUseCase
 CryptographyRepository --|> EncryptFileUseCase
@@ -64,6 +86,9 @@ CryptographyRepository --|> DecryptFileUseCase
 FileBrowserRepository --|> GetFileUseCase
 DecryptFileUseCase --|> HomeViewModel
 GetFileUseCase --|> HomeViewModel
+ZipUseCase --|> BinViewModel
+UnzipUsecase --|> BinViewModel
+BinViewModel --|> BinFragment
 EncryptFileUseCase --|> FileBrowserViewModel
 GetFileUseCase --|> FileBrowserViewModel
 CheckPasswordUseCase --|> LoginViewModel
@@ -71,5 +96,4 @@ CreateStartFilesUseCase --|> LoginViewModel
 FileBrowserViewModel --|> FileBrowserFragment
 HomeViewModel --|> HomeFragment
 LoginViewModel --|> LoginFragment
-
 @enduml

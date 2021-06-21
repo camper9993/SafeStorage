@@ -1,4 +1,4 @@
-package ru.danilov.safestorage.data.file_compression
+package ru.danilov.safestorage.data.zip
 
 import net.lingala.zip4j.ZipFile
 import java.io.*

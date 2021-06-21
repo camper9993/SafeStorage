@@ -1,5 +1,6 @@
 package ru.danilov.safestorage.data.cryptography;
 
+import android.util.Log
 import ru.danilov.safestorage.models.PlainFile
 import ru.danilov.safestorage.ui.SafeStorageActivity.Companion.key
 import java.io.File
@@ -28,10 +29,13 @@ object EncryptionEngine {
                 outputStream = CipherOutputStream(outputStream, cipher)
 
                 var bytesRead = inputStream.read(buffer)
+                val time = System.currentTimeMillis()
+                Log.d("Start:", time.toString())
                 while (bytesRead != -1) {
                     outputStream.write(buffer, 0, bytesRead)
                     bytesRead = inputStream.read(buffer)
                 }
+                Log.d("End:", (System.currentTimeMillis() - time).toString())
             } finally {
                 inputStream?.close()
                 outputStream?.close()
@@ -58,10 +62,13 @@ object EncryptionEngine {
                 val cipher = Cryptography.getCipher(key, inputStream)
                 outputStream = CipherOutputStream(plainFile.outputStream(), cipher)
                 var bytesRead = inputStream.read(buffer)
+                val time = System.currentTimeMillis()
+                Log.d("Start:", time.toString())
                 while (bytesRead != -1) {
                     outputStream.write(buffer, 0, bytesRead)
                     bytesRead = inputStream.read(buffer)
                 }
+                Log.d("End:", (System.currentTimeMillis() - time).toString())
             } finally {
                 inputStream?.close()
                 outputStream?.close()

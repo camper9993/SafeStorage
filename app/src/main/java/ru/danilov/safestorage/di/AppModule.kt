@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import ru.danilov.safestorage.data.cryptography.CryptographyRepositoryImpl
 import ru.danilov.safestorage.data.file_browser.FileBrowserRepositoryImpl
 import ru.danilov.safestorage.data.login.LoginRepositoryImpl
+import ru.danilov.safestorage.data.zip.ZipRepositoryImpl
 import ru.danilov.safestorage.domain.repository.CryptographyRepository
 import ru.danilov.safestorage.domain.repository.FileBrowserRepository
 import ru.danilov.safestorage.domain.repository.LoginRepository
@@ -38,6 +39,12 @@ class AppModule {
     @Provides
     fun provideLoginRepository(@ApplicationContext applicationContext: Context): LoginRepository {
         return LoginRepositoryImpl(applicationContext)
+    }
+
+    @Singleton
+    @Provides
+    fun provideZipRepositoryImpl(): ZipRepositoryImpl {
+        return ZipRepositoryImpl()
     }
 
 }
